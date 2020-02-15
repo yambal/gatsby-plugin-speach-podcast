@@ -472,10 +472,10 @@ md-to-ssl@1.0.4:
     marked "^0.8.0"
     xml-formatter "^1.2.0"
 
-md-to-ssl@1.0.7:
-  version "1.0.7"
-  resolved "https://registry.yarnpkg.com/md-to-ssl/-/md-to-ssl-1.0.7.tgz#17c136466205de18dffa140f53c23e122ff4e09b"
-  integrity sha512-5bsLA1tIXkyhxpdUYtRKW7jiIpJGiF+XNAACDFU8YKtCdBdGsHHtmwJDSuW/l+ZcBmOKIfsCpn2lU0jxaViJ2A==
+md-to-ssl@1.0.8:
+  version "1.0.8"
+  resolved "https://registry.yarnpkg.com/md-to-ssl/-/md-to-ssl-1.0.8.tgz#1e3c281e72312329a1589f45ce75e99f1d77ed45"
+  integrity sha512-H109R6A1IAmwZ0MjKBb6JRryrQoKewhc5PHUY5PhMHKwi7ZFm4ZWn9uvlhOmw8dqRil0oJhH7FiEHmYa+vV6fQ==
   dependencies:
     marked "^0.8.0"
     xml-formatter "^1.2.0"
