@@ -452,10 +452,10 @@ marked@^0.8.0:
   resolved "https://registry.yarnpkg.com/marked/-/marked-0.8.0.tgz#ec5c0c9b93878dc52dd54be8d0e524097bd81a99"
   integrity sha512-MyUe+T/Pw4TZufHkzAfDj6HarCBWia2y27/bhuYkTaiUnfDYFnCP3KUN+9oM7Wi6JA2rymtVYbQu3spE0GCmxQ==
 
-md-to-ssl@^1.0.1:
-  version "1.0.1"
-  resolved "https://registry.yarnpkg.com/md-to-ssl/-/md-to-ssl-1.0.1.tgz#e56a843997b67841436fc7db42ce92ae5b99d099"
-  integrity sha512-7NNkKfW5EMYjljSUY5M6eVL8OIeOoMMxfQlDxtic0TYjemIefsEwhS6t0tBPmp0KbKX7bDTGvjYf02WBYpPpHg==
+md-to-ssl@1.0.3:
+  version "1.0.3"
+  resolved "https://registry.yarnpkg.com/md-to-ssl/-/md-to-ssl-1.0.3.tgz#b3bc5e839b5f4b752b7aa7a57242a0efdf8a19c6"
+  integrity sha512-z2E+TT3Ys9rVwPFD2J7LtIASKAt15XWyEjOGM/IB0vq0KQDCTGUcDZWsDWo8eNosYmDmbjX+ahxKc3TYPWobfA==
   dependencies:
     marked "^0.8.0"
     xml-formatter "^1.2.0"
