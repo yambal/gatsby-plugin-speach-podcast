@@ -1,8 +1,7 @@
 import mp3 from './libs/mp3'
 import { listFiles } from './file-checker'
 import { cacheToPablic, podcastCashSet, checkCache, iPodcastCacheCheckResponse } from './libs/cache'
-import { getChannelTitle, getSiteUrl, getChannelDescription, getGoogleProjectId, getGoogleKeyFileName } from './libs/option-parser'
-// import { mdToSsml } from './libs/mdToSsml'
+import { getChannelTitle, getChannelDescription, getGoogleProjectId, getGoogleKeyFileName } from './libs/option-parser'
 import { mdToSsml } from 'md-to-ssl'
 import { iPodcastEdge, iPluginOption } from './libs/interfaces'
 
@@ -33,7 +32,7 @@ const podcastBuildMp3 = (
       console.log('keyFilename', keyFilename)
 
       if (!projectId || !keyFilename) {
-        throw('error ')
+        throw new Error('error: projectId, keyFilename')
       }
 
       mp3(ssml, projectId, keyFilename)
@@ -77,7 +76,10 @@ const podcastCacheSaver = (checkCacheResponse: iPodcastCacheCheckResponse) => {
 }
 
 const podcastEdgeToFile = (edge: iPodcastEdge, options: iPluginOption):Promise<iPodcastCacheCheckResponse> => {
-  return new Promise((resolve: (resolve: iPodcastCacheCheckResponse) => void) => {
+  return new Promise((
+    resolve: (resolve: iPodcastCacheCheckResponse) => void,
+    reject: () => void
+  ) => {
     
     return checkCache(edge, options)
     .then(
@@ -88,11 +90,10 @@ const podcastEdgeToFile = (edge: iPodcastEdge, options: iPluginOption):Promise<i
         const channelTitle = getChannelTitle(channel, options)
         const channelDescription = getChannelDescription(channel, options)
 
-        //const ssml = HtmlToSSML(channelTitle, channelDescription, title, html)
+        // const ssml = HtmlToSSML(channelTitle, channelDescription, title, html)
         const ssml = mdToSsml(rawMarkdownBody, title, channelDescription)
-        console.log(ssml)
-        
-        
+        // console.log(ssml)
+
         return podcastBuildMp3(checkCacheResponse, ssml, getGoogleProjectId(options), getGoogleKeyFileName(options))
       }
     )
@@ -109,6 +110,10 @@ const podcastEdgeToFile = (edge: iPodcastEdge, options: iPluginOption):Promise<i
     .then(
       (res) => {
         resolve(res)
+      }
+    ).catch(
+      (message) => {
+        reject()
       }
     )
   })
@@ -155,6 +160,12 @@ module.exports = ({ graphql }, pluginOptions: iPluginOption, cb: () => void) => 
     ))
     .then(
       () => {
+        console.log('/podcast')
+        cb && cb()
+      }
+    ).catch(
+      () => {
+        console.log('error')
         console.log('/podcast')
         cb && cb()
       }
