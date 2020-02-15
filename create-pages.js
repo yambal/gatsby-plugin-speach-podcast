@@ -13,6 +13,8 @@ const podcastBuildMp3 = (checkCacheResponse, ssml, projectId, keyFilename) => {
     return new Promise((resolve) => {
         if (!checkCacheResponse.hasCashe || checkCacheResponse.isOld) {
             console.log('podcast: make mp3');
+            console.log('projectId', projectId);
+            console.log('keyFilename', keyFilename);
             if (!projectId || !keyFilename) {
                 throw ('error ');
             }

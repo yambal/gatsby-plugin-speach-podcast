@@ -24,5 +24,5 @@ exports.getGoogleProjectId = (option) => {
     return option && option.projectId ? option.projectId : null;
 };
 exports.getGoogleKeyFileName = (option) => {
-    return option && option.KeyFileName ? option.KeyFileName : null;
+    return option && option.keyFilename ? option.keyFilename : null;
 };

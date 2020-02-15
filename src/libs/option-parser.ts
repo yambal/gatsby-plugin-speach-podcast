@@ -35,5 +35,5 @@ export const getGoogleProjectId = (option?: any): string | null => {
 }
 
 export const getGoogleKeyFileName = (option?: any): string | null => {
-  return option && option.KeyFileName ? option.KeyFileName : null
+  return option && option.keyFilename ? option.keyFilename : null
 }
