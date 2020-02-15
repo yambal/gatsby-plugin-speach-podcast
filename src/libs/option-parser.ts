@@ -1,26 +1,22 @@
-interface iOption{
-  siteURL: string
-  audioDir: string
-  channels: any
-}
+import { iPluginOption } from './interfaces'
 
 interface iChannelOption {
   title: string
   description: string
 }
 
-export const getChannelOption = (channel?: string, option?: iOption):iChannelOption | null => {
+export const getChannelOption = (channel?: string, option?: iPluginOption):iChannelOption | null => {
   const channelOptions = option && option.channels
   return channel && channel !== 'null' && channelOptions[channel]
     ? channelOptions[channel]
     : channelOptions.default ? channelOptions.default : null
 }
 
-export const getSiteUrl = (option?: iOption) => {
+export const getSiteUrl = (option?: iPluginOption) => {
   return option && option.siteURL
 }
 
-export const getAudioPath = (option?: iOption) => {
+export const getAudioPath = (option?: iPluginOption) => {
   return option && option.audioDir
 }
 

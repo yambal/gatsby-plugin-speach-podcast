@@ -12,6 +12,7 @@ let MP3Type = new graphql_1.GraphQLObjectType({
         path: { type: graphql_1.GraphQLString }
     },
 });
+// @ts-ignore: Unreachable code error
 module.exports = ({ type }, option) => {
     if (type.name !== `MarkdownRemark`) {
         return {};
@@ -24,6 +25,7 @@ module.exports = ({ type }, option) => {
                     type: graphql_1.GraphQLString,
                 }
             },
+            // @ts-ignore: Unreachable code error
             resolve: (MDNode, args) => {
                 const { frontmatter } = MDNode;
                 const { templateKey, slug, channel } = frontmatter;

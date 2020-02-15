@@ -1,5 +1,6 @@
 import * as crypto from 'crypto'
 import { getAudioPath, getSiteUrl } from './option-parser'
+import { iPluginOption } from './interfaces'
 
 const CACHE_DIR = '.podcast'
 
@@ -16,7 +17,7 @@ export const edgeFileName = (channel: string, slug: string, exe?:string) => {
 export const path = {
     cacheDir: `${process.cwd()}/${CACHE_DIR}`,
     publicDir: `${process.cwd()}/public`,
-    publicMp3Dir: (option) => {
+    publicMp3Dir: (option: iPluginOption) => {
         const audioPath = getAudioPath(option)
         return `${path.publicDir}/${audioPath}`
     },

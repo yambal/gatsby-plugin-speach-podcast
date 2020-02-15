@@ -1,12 +1,13 @@
 import * as fs from 'fs'
 import { path } from './filePath'
-import mkdirp from 'mkdirp-then'
+import { mkdirpThen } from './mkdirp-then'
 import * as crypto from 'crypto'
 import * as util from 'util'
+import { iPodcastEdge } from './interfaces'
 
 /** キャッシュを取得 */
 export const podcastCacheGet = (key: string) => {
-  return new Promise((resolve: (resolve: string) => void) => {
+  return new Promise((resolve: (resolve: string | null) => void) => {
     const cacheFilePath = path.cacheFilePath(key)
     try {
       fs.statSync(cacheFilePath)
@@ -29,7 +30,7 @@ export const podcastCashSet = (key: string, value: string, channel: string, slug
     const cacheDir = path.cacheDir
     const cacheFilePath = path.cacheFilePath(key)
     const edgeMp3CacheFilePath = path.edgeMp3CacheFilePath(channel, slug)
-    mkdirp(cacheDir)
+    mkdirpThen(cacheDir)
     .then(
       () => {
         fs.writeFile(cacheFilePath, value, 'utf8', () => {
@@ -74,7 +75,7 @@ export interface iPodcastCacheCheckResponse {
   audioData?: Buffer
 }
 
-export const checkCache = (edge, pluginOption) => {
+export const checkCache = (edge: iPodcastEdge, pluginOption: any) => {
   return new Promise((resolve: (resolve: iPodcastCacheCheckResponse) => void) => {
     const html = edge.node.html
     const { title, date, channel, slug } = edge.node.frontmatter
@@ -116,7 +117,7 @@ export const checkCache = (edge, pluginOption) => {
 
 export const cacheToPablic = (podcastCacheCheckResponse: iPodcastCacheCheckResponse) => {
   return new Promise((resolve: (podcastCacheCheckResponse: iPodcastCacheCheckResponse) => void) => {
-    mkdirp(podcastCacheCheckResponse.mp3PublicDir)
+    mkdirpThen(podcastCacheCheckResponse.mp3PublicDir)
     .then(
       () => {
         fs.copyFile(podcastCacheCheckResponse.mp3CacheFilePath, podcastCacheCheckResponse.mp3PublicFilePath, (err) => {

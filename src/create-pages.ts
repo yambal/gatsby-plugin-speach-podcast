@@ -4,6 +4,7 @@ import { cacheToPablic, podcastCashSet, checkCache, iPodcastCacheCheckResponse }
 import { getChannelTitle, getSiteUrl, getChannelDescription, getGoogleProjectId, getGoogleKeyFileName } from './libs/option-parser'
 // import { mdToSsml } from './libs/mdToSsml'
 import { mdToSsml } from 'md-to-ssl'
+import { iPodcastEdge, iPluginOption } from './libs/interfaces'
 
 export interface iPodcastBuild {
   edge: any
@@ -72,13 +73,12 @@ const podcastCacheSaver = (checkCacheResponse: iPodcastCacheCheckResponse) => {
   })
 }
 
-const podcastEdgeToFile = (edge, options):Promise<iPodcastCacheCheckResponse> => {
+const podcastEdgeToFile = (edge: iPodcastEdge, options: iPluginOption):Promise<iPodcastCacheCheckResponse> => {
   return new Promise((resolve: (resolve: iPodcastCacheCheckResponse) => void) => {
     
     return checkCache(edge, options)
     .then(
       (checkCacheResponse) => {
-        const html = edge.node.html
         const { title, channel } = edge.node.frontmatter
         const { rawMarkdownBody } = edge.node
 
@@ -111,7 +111,8 @@ const podcastEdgeToFile = (edge, options):Promise<iPodcastCacheCheckResponse> =>
   })
 }
 
-module.exports = ({ cache, actions, graphql }, pluginOptions, cb: () => void) => {
+// @ts-ignore: Unreachable code error
+module.exports = ({ graphql }, pluginOptions: iPluginOption, cb: () => void) => {
   return graphql(`
   {
     allMarkdownRemark(filter: {frontmatter: {templateKey: {eq: "PodCast"}}}, limit: 10) {
@@ -133,16 +134,16 @@ module.exports = ({ cache, actions, graphql }, pluginOptions, cb: () => void) =>
       }
     }
   }
-  `).then(result => {
+  `).then((result: any) => {
     if (result.errors) {
-      result.errors.forEach(e => console.error(e.toString()))
+      result.errors.forEach((e: any) => console.error(e.toString()))
       return Promise.reject(result.errors)
     }
 
     const list = listFiles(`${process.cwd()}/.podcast`);
     console.log('file check', list.length);
 
-    const edges = result.data.allMarkdownRemark.edges
+    const edges: iPodcastEdge[] = result.data.allMarkdownRemark.edges
 
     Promise.all(edges.map(
       edge => {

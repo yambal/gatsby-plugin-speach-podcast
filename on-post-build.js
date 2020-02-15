@@ -3,6 +3,7 @@ Object.defineProperty(exports, "__esModule", { value: true });
 const getI_itunes_duration_1 = require("./libs/getI-itunes-duration");
 const option_parser_1 = require("./libs/option-parser");
 var fs = require('fs');
+// @ts-ignore: Unreachable code error
 module.exports = ({ actions, reporter, graphql }, option) => {
     graphql(`
   {

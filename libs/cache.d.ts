@@ -1,6 +1,7 @@
 /// <reference types="node" />
+import { iPodcastEdge } from './interfaces';
 /** キャッシュを取得 */
-export declare const podcastCacheGet: (key: string) => Promise<string>;
+export declare const podcastCacheGet: (key: string) => Promise<string | null>;
 /** キャッシュを保存 */
 export declare const podcastCashSet: (key: string, value: string, channel: string, slug: string, audio?: Buffer | undefined) => Promise<unknown>;
 /** ハッシュ生成器 */
@@ -19,5 +20,5 @@ export interface iPodcastCacheCheckResponse {
     slug: string;
     audioData?: Buffer;
 }
-export declare const checkCache: (edge: any, pluginOption: any) => Promise<iPodcastCacheCheckResponse>;
+export declare const checkCache: (edge: iPodcastEdge, pluginOption: any) => Promise<iPodcastCacheCheckResponse>;
 export declare const cacheToPablic: (podcastCacheCheckResponse: iPodcastCacheCheckResponse) => Promise<iPodcastCacheCheckResponse>;

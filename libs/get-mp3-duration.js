@@ -108,8 +108,10 @@ function parseFrameHeader(header) {
     const layer = layers[layerBits];
     const bitRateKey = 'V' + simpleVersion + 'L' + layer;
     const bitRateIndex = (b2 & 0xf0) >> 4;
+    // @ts-ignore: Unreachable code error
     const bitRate = bitRates[bitRateKey][bitRateIndex] || 0;
     const sampleRateIdx = (b2 & 0x0c) >> 2;
+    // @ts-ignore: Unreachable code error
     const sampleRate = sampleRates[version][sampleRateIdx] || 0;
     const sample = samples[simpleVersion][layer];
     const paddingBit = (b2 & 0x02) >> 1;

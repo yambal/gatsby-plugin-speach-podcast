@@ -1,5 +1,6 @@
 import { getITunesDuration } from './libs/getI-itunes-duration'
 import { getChannelTitle, getSiteUrl, getChannelDescription } from './libs/option-parser'
+import { iPluginOption } from './libs/interfaces'
 var fs = require('fs')
 /**
  * https://www.gatsbyjs.org/docs/node-apis/#onPostBuild
@@ -25,12 +26,8 @@ interface iPodcastEdge {
     }
 }
 
-interface iOption {
-  siteUrl?: string
-  channels?: any
-}
-
-module.exports = ({ actions, reporter, graphql }, option) => {
+// @ts-ignore: Unreachable code error
+module.exports = ({ actions, reporter, graphql }, option: iPluginOption) => {
 
   graphql(`
   {

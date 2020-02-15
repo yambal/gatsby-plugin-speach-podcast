@@ -6,13 +6,10 @@ var __importStar = (this && this.__importStar) || function (mod) {
     result["default"] = mod;
     return result;
 };
-var __importDefault = (this && this.__importDefault) || function (mod) {
-    return (mod && mod.__esModule) ? mod : { "default": mod };
-};
 Object.defineProperty(exports, "__esModule", { value: true });
 const fs = __importStar(require("fs"));
 const filePath_1 = require("./filePath");
-const mkdirp_then_1 = __importDefault(require("mkdirp-then"));
+const mkdirp_then_1 = require("./mkdirp-then");
 const crypto = __importStar(require("crypto"));
 const util = __importStar(require("util"));
 /** キャッシュを取得 */
@@ -40,7 +37,7 @@ exports.podcastCashSet = (key, value, channel, slug, audio) => {
         const cacheDir = filePath_1.path.cacheDir;
         const cacheFilePath = filePath_1.path.cacheFilePath(key);
         const edgeMp3CacheFilePath = filePath_1.path.edgeMp3CacheFilePath(channel, slug);
-        mkdirp_then_1.default(cacheDir)
+        mkdirp_then_1.mkdirpThen(cacheDir)
             .then(() => {
             fs.writeFile(cacheFilePath, value, 'utf8', () => {
                 if (audio) {
@@ -105,7 +102,7 @@ exports.checkCache = (edge, pluginOption) => {
 };
 exports.cacheToPablic = (podcastCacheCheckResponse) => {
     return new Promise((resolve) => {
-        mkdirp_then_1.default(podcastCacheCheckResponse.mp3PublicDir)
+        mkdirp_then_1.mkdirpThen(podcastCacheCheckResponse.mp3PublicDir)
             .then(() => {
             fs.copyFile(podcastCacheCheckResponse.mp3CacheFilePath, podcastCacheCheckResponse.mp3PublicFilePath, (err) => {
                 if (!err) {

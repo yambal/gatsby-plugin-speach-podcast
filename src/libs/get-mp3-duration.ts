@@ -23,7 +23,7 @@ const sampleRates = {
   '2.5': [ 11025, 12000, 8000 ]
 }
 
-const samples = {
+const samples: any = {
   x: {
     x: 0,
     1: 0,
@@ -76,7 +76,7 @@ export const getMp3Duration = (buffer: Buffer) => {
   return round(duration)
 }
 
-function skipID3 (buffer) {
+function skipID3 (buffer: Buffer): number {
   // http://id3.org/d3v2.3.0
   if (buffer[0] === 0x49 && buffer[1] === 0x44 && buffer[2] === 0x33) { // ID3
     const id3v2Flags = buffer[5]
@@ -97,7 +97,7 @@ function skipID3 (buffer) {
   return 0
 }
 
-function frameSize (samples, layer, bitRate, sampleRate, paddingBit) {
+function frameSize (samples: any, layer: any, bitRate: any, sampleRate: any, paddingBit: any): number {
   if (layer === 1) {
     return (((samples * bitRate * 125 / sampleRate) + paddingBit * 4)) | 0
   } else { // layer 2, 3
@@ -105,7 +105,7 @@ function frameSize (samples, layer, bitRate, sampleRate, paddingBit) {
   }
 }
 
-function parseFrameHeader (header) {
+function parseFrameHeader (header: any) {
   const b1 = header[1]
   const b2 = header[2]
 
@@ -118,10 +118,12 @@ function parseFrameHeader (header) {
 
   const bitRateKey = 'V' + simpleVersion + 'L' + layer
   const bitRateIndex = (b2 & 0xf0) >> 4
-  const bitRate = bitRates[bitRateKey][bitRateIndex] || 0
+  // @ts-ignore: Unreachable code error
+  const bitRate: number = bitRates[bitRateKey][bitRateIndex] || 0
 
   const sampleRateIdx = (b2 & 0x0c) >> 2
-  const sampleRate = sampleRates[version][sampleRateIdx] || 0
+  // @ts-ignore: Unreachable code error
+  const sampleRate: number = sampleRates[version][sampleRateIdx] || 0
 
   const sample = samples[simpleVersion][layer]
 
@@ -135,6 +137,6 @@ function parseFrameHeader (header) {
   }
 }
 
-function round (duration) {
+function round (duration: number) {
   return Math.round(duration * 1000) // round to nearest ms
 }

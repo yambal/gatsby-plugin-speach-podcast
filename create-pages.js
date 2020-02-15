@@ -48,7 +48,6 @@ const podcastEdgeToFile = (edge, options) => {
     return new Promise((resolve) => {
         return cache_1.checkCache(edge, options)
             .then((checkCacheResponse) => {
-            const html = edge.node.html;
             const { title, channel } = edge.node.frontmatter;
             const { rawMarkdownBody } = edge.node;
             const channelTitle = option_parser_1.getChannelTitle(channel, options);
@@ -69,7 +68,8 @@ const podcastEdgeToFile = (edge, options) => {
         });
     });
 };
-module.exports = ({ cache, actions, graphql }, pluginOptions, cb) => {
+// @ts-ignore: Unreachable code error
+module.exports = ({ graphql }, pluginOptions, cb) => {
     return graphql(`
   {
     allMarkdownRemark(filter: {frontmatter: {templateKey: {eq: "PodCast"}}}, limit: 10) {
@@ -91,9 +91,9 @@ module.exports = ({ cache, actions, graphql }, pluginOptions, cb) => {
       }
     }
   }
-  `).then(result => {
+  `).then((result) => {
         if (result.errors) {
-            result.errors.forEach(e => console.error(e.toString()));
+            result.errors.forEach((e) => console.error(e.toString()));
             return Promise.reject(result.errors);
         }
         const list = file_checker_1.listFiles(`${process.cwd()}/.podcast`);

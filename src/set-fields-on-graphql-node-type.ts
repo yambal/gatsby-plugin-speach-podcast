@@ -1,6 +1,7 @@
 import { GraphQLObjectType, GraphQLString } from 'gatsby/graphql'
 import { path } from './libs/filePath'
 import { getAudioPath, getSiteUrl } from './libs/option-parser'
+import { iPluginOption } from './libs/interfaces';
 
 // =====================================================
 let MP3Type = new GraphQLObjectType({
@@ -12,7 +13,8 @@ let MP3Type = new GraphQLObjectType({
     },
   });
   
-  module.exports = ({ type }, option) => {
+  // @ts-ignore: Unreachable code error
+  module.exports = ({ type }, option: iPluginOption) => {
     if (type.name !== `MarkdownRemark`) {
       return {}
     }
@@ -25,6 +27,7 @@ let MP3Type = new GraphQLObjectType({
             type: GraphQLString,
           }
         },
+        // @ts-ignore: Unreachable code error
         resolve: (MDNode, args) => {
           const {
             frontmatter
