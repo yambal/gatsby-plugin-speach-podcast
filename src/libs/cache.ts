@@ -1,6 +1,6 @@
 import * as fs from 'fs'
 import { path } from './filePath'
-import * as mkdirp from 'mkdirp-then'
+import mkdirp from 'mkdirp-then'
 import * as crypto from 'crypto'
 import * as util from 'util'
 

@@ -18,6 +18,7 @@
   },
   "homepage": "https://github.com/yambal/gatsby-plugin-speach-podcast#readme",
   "devDependencies": {
+    "@types/mkdirp": "^1.0.0",
     "@types/node": "^13.7.1",
     "typescript": "^3.7.5"
   },
