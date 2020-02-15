@@ -54,8 +54,8 @@ const podcastEdgeToFile = (edge, options) => {
             const channelTitle = option_parser_1.getChannelTitle(channel, options);
             const channelDescription = option_parser_1.getChannelDescription(channel, options);
             // const ssml = HtmlToSSML(channelTitle, channelDescription, title, html)
-            const ssml = md_to_ssl_1.mdToSsml(rawMarkdownBody, title, channelDescription);
-            // console.log(ssml)
+            const ssml = md_to_ssl_1.mdToSsml(rawMarkdownBody, title, channelDescription, { google: true });
+            console.log(ssml);
             return podcastBuildMp3(checkCacheResponse, ssml, option_parser_1.getGoogleProjectId(options), option_parser_1.getGoogleKeyFileName(options));
         })
             .then((res) => {
