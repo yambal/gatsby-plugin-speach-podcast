@@ -29,6 +29,9 @@ const podcastBuildMp3 = (
     if (!checkCacheResponse.hasCashe || checkCacheResponse.isOld) {
       console.log('podcast: make mp3')
 
+      console.log('projectId', projectId)
+      console.log('keyFilename', keyFilename)
+
       if (!projectId || !keyFilename) {
         throw('error ')
       }
