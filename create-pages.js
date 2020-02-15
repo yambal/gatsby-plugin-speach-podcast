@@ -7,7 +7,6 @@ const mp3_1 = __importDefault(require("./libs/mp3"));
 const file_checker_1 = require("./file-checker");
 const cache_1 = require("./libs/cache");
 const option_parser_1 = require("./libs/option-parser");
-// import { mdToSsml } from './libs/mdToSsml'
 const md_to_ssl_1 = require("md-to-ssl");
 const podcastBuildMp3 = (checkCacheResponse, ssml, projectId, keyFilename) => {
     return new Promise((resolve) => {
@@ -16,7 +15,7 @@ const podcastBuildMp3 = (checkCacheResponse, ssml, projectId, keyFilename) => {
             console.log('projectId', projectId);
             console.log('keyFilename', keyFilename);
             if (!projectId || !keyFilename) {
-                throw ('error ');
+                throw new Error('error: projectId, keyFilename');
             }
             mp3_1.default(ssml, projectId, keyFilename)
                 .then(audioData => {
@@ -47,16 +46,16 @@ const podcastCacheSaver = (checkCacheResponse) => {
     });
 };
 const podcastEdgeToFile = (edge, options) => {
-    return new Promise((resolve) => {
+    return new Promise((resolve, reject) => {
         return cache_1.checkCache(edge, options)
             .then((checkCacheResponse) => {
             const { title, channel } = edge.node.frontmatter;
             const { rawMarkdownBody } = edge.node;
             const channelTitle = option_parser_1.getChannelTitle(channel, options);
             const channelDescription = option_parser_1.getChannelDescription(channel, options);
-            //const ssml = HtmlToSSML(channelTitle, channelDescription, title, html)
+            // const ssml = HtmlToSSML(channelTitle, channelDescription, title, html)
             const ssml = md_to_ssl_1.mdToSsml(rawMarkdownBody, title, channelDescription);
-            console.log(ssml);
+            // console.log(ssml)
             return podcastBuildMp3(checkCacheResponse, ssml, option_parser_1.getGoogleProjectId(options), option_parser_1.getGoogleKeyFileName(options));
         })
             .then((res) => {
@@ -67,6 +66,8 @@ const podcastEdgeToFile = (edge, options) => {
         })
             .then((res) => {
             resolve(res);
+        }).catch((message) => {
+            reject();
         });
     });
 };
@@ -105,6 +106,10 @@ module.exports = ({ graphql }, pluginOptions, cb) => {
             return podcastEdgeToFile(edge, pluginOptions);
         }))
             .then(() => {
+            console.log('/podcast');
+            cb && cb();
+        }).catch(() => {
+            console.log('error');
             console.log('/podcast');
             cb && cb();
         });
