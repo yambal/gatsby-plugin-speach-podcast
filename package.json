@@ -1,6 +1,6 @@
 {
   "name": "gatsby-plugin-speach-podcast",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "description": "gatsby-plugin-speach-podcast",
   "main": "index.js",
   "scripts": {
@@ -27,7 +27,7 @@
     "crypto": "^1.0.1",
     "fs": "^0.0.1-security",
     "gatsby-plugin-speach-podcast": "0.0.9",
-    "md-to-ssl": "1.0.5",
+    "md-to-ssl": "1.0.6",
     "mkdirp-then": "^1.2.0",
     "util": "^0.12.1"
   }
