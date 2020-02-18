@@ -8,6 +8,7 @@ const getMp3 = (ssml: string, projectId: string, keyFilename: string) => {
       keyFilename: keyFilename,
     });
   
+    // https://cloud.google.com/text-to-speech/docs/reference/rest/v1beta1/text/synthesize?hl=ja
     const request: any = {
       input: {
         ssml
@@ -17,7 +18,11 @@ const getMp3 = (ssml: string, projectId: string, keyFilename: string) => {
         name: 'ja-JP-Standard-A',
         ssmlGender: 'NEUTRAL'
       },
-      audioConfig: {audioEncoding: 'MP3'},
+      audioConfig: {
+        speakingRate: 1.15,
+        pitch: -5,
+        audioEncoding: 'MP3'
+      },
     };
   
     client.synthesizeSpeech(request)
