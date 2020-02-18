@@ -472,12 +472,13 @@ md-to-ssl@1.0.4:
     marked "^0.8.0"
     xml-formatter "^1.2.0"
 
-md-to-ssl@1.1.0:
-  version "1.1.0"
-  resolved "https://registry.yarnpkg.com/md-to-ssl/-/md-to-ssl-1.1.0.tgz#e2bcecfb5b35f6ae4287d482c5c6cb161d4c960b"
-  integrity sha512-2uy9Wh2UxRnTS3q/ro7AHK7GTHGFoGw6y3XMiLJOKG9nloa/pfMs8Y9Ir1Fw/CIHR8IxrdVSuatHVqJU//26pQ==
+md-to-ssl@1.1.1:
+  version "1.1.1"
+  resolved "https://registry.yarnpkg.com/md-to-ssl/-/md-to-ssl-1.1.1.tgz#95480283aaad4b0aa9d2fb53fc54d26b3b75e340"
+  integrity sha512-+YRfNnAZVDsdq6gkuPuczFZltbEqIi/Elh8GSfrLz8o0BLE20ObwZE5w3kfmdHHluDtGIOU3yJtccFd/+xN4Tw==
   dependencies:
     marked "^0.8.0"
+    shortid "^2.2.15"
     xml-formatter "^1.2.0"
 
 mime@^2.2.0:
@@ -514,6 +515,11 @@ ms@^2.1.1:
   version "2.1.2"
   resolved "https://registry.yarnpkg.com/ms/-/ms-2.1.2.tgz#d09d1f357b443f493382a8eb3ccd183872ae6009"
   integrity sha512-sGkPx+VjMtmA6MX27oA4FBFELFCZZ4S4XqeGOXCv68tT+jb3vk/RyaKWP0PTKyWtmLSM0b+adUTEvbs1PEaH2w==
+
+nanoid@^2.1.0:
+  version "2.1.11"
+  resolved "https://registry.yarnpkg.com/nanoid/-/nanoid-2.1.11.tgz#ec24b8a758d591561531b4176a01e3ab4f0f0280"
+  integrity sha512-s/snB+WGm6uwi0WjsZdaVcuf3KJXlfGl2LcxgwkEwJF0D/BWzVWAZW/XY4bFaiR7s0Jk3FPvlnepg1H1b1UwlA==
 
 node-fetch@^2.3.0, node-fetch@^2.6.0:
   version "2.6.0"
@@ -630,6 +636,13 @@ semver@^6.0.0, semver@^6.2.0:
   version "6.3.0"
   resolved "https://registry.yarnpkg.com/semver/-/semver-6.3.0.tgz#ee0a64c8af5e8ceea67687b133761e1becbd1d3d"
   integrity sha512-b39TBaTSfV6yBrapU89p5fKekE2m/NwnDocOVruQFS1/veMgdzuPcnOM34M6CwxW8jH/lxEa5rBoDeUwu5HHTw==
+
+shortid@^2.2.15:
+  version "2.2.15"
+  resolved "https://registry.yarnpkg.com/shortid/-/shortid-2.2.15.tgz#2b902eaa93a69b11120373cd42a1f1fe4437c122"
+  integrity sha512-5EaCy2mx2Jgc/Fdn9uuDuNIIfWBpzY4XIlhoqtXF6qsf+/+SGZ+FxDdX/ZsMZiWupIWNqAEmiNY4RC+LSmCeOw==
+  dependencies:
+    nanoid "^2.1.0"
 
 stream-shift@^1.0.0:
   version "1.0.1"
