@@ -1,6 +1,6 @@
 {
   "name": "gatsby-plugin-speach-podcast",
-  "version": "0.2.5",
+  "version": "0.2.6",
   "description": "gatsby-plugin-speach-podcast",
   "main": "index.js",
   "scripts": {

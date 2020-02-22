@@ -92,7 +92,8 @@ const podcastEdgeToFile = (edge: iPodcastEdge, options: iPluginOption):Promise<i
 
         // const ssml = HtmlToSSML(channelTitle, channelDescription, title, html)
         const ssml = mdToSsml(rawMarkdownBody, title, channelDescription, { google: true })
-        console.log(ssml)
+        console.log(title, ssml)
+        // console.log(ssml)
 
         return podcastBuildMp3(checkCacheResponse, ssml, getGoogleProjectId(options), getGoogleKeyFileName(options))
       }
