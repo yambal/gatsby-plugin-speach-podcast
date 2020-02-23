@@ -76,7 +76,7 @@ const podcastEdgeToFile = (edge, options) => {
 module.exports = ({ graphql }, pluginOptions, cb) => {
     return graphql(`
   {
-    allMarkdownRemark(filter: {frontmatter: {templateKey: {eq: "PodCast"}}}, limit: 10) {
+    allMarkdownRemark(sort: {fields: frontmatter___date, order: DESC}, filter: {frontmatter: {templateKey: {eq: "PodCast"}}}, limit: 100) {
       edges {
         node {
           id

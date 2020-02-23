@@ -124,7 +124,7 @@ const podcastEdgeToFile = (edge: iPodcastEdge, options: iPluginOption):Promise<i
 module.exports = ({ graphql }, pluginOptions: iPluginOption, cb: () => void) => {
   return graphql(`
   {
-    allMarkdownRemark(filter: {frontmatter: {templateKey: {eq: "PodCast"}}}, limit: 10) {
+    allMarkdownRemark(sort: {fields: frontmatter___date, order: DESC}, filter: {frontmatter: {templateKey: {eq: "PodCast"}}}, limit: 100) {
       edges {
         node {
           id
