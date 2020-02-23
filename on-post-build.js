@@ -7,7 +7,7 @@ var fs = require('fs');
 module.exports = ({ actions, reporter, graphql }, option) => {
     graphql(`
   {
-    allMarkdownRemark(filter: {frontmatter: {templateKey: {eq: "PodCast"}}}, limit: 10) {
+    allMarkdownRemark(sort: {fields: frontmatter___date, order: DESC}, filter: {frontmatter: {templateKey: {eq: "PodCast"}}}, limit: 100) {
       edges {
         node {
           fields {
@@ -33,7 +33,7 @@ module.exports = ({ actions, reporter, graphql }, option) => {
         const edges = result.data.allMarkdownRemark.edges;
         const channelIndex = {};
         edges.forEach(edge => {
-            const { node: { fields: { slug }, mp3: { path, url, absoluteUrl }, frontmatter: { date: pubDateStr, description, title, channel } } } = edge;
+            const { node: { fields: { slug }, mp3: { path, url, absoluteUrl }, frontmatter: { date: pubDateStr, description, title, channel = '' } } } = edge;
             if (typeof channelIndex[channel] === 'undefined') {
                 channelIndex[channel] = [];
             }

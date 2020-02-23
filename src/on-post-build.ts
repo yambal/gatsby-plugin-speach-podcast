@@ -31,7 +31,7 @@ module.exports = ({ actions, reporter, graphql }, option: iPluginOption) => {
 
   graphql(`
   {
-    allMarkdownRemark(filter: {frontmatter: {templateKey: {eq: "PodCast"}}}, limit: 10) {
+    allMarkdownRemark(sort: {fields: frontmatter___date, order: DESC}, filter: {frontmatter: {templateKey: {eq: "PodCast"}}}, limit: 100) {
       edges {
         node {
           fields {
@@ -55,7 +55,7 @@ module.exports = ({ actions, reporter, graphql }, option: iPluginOption) => {
   `).then(result => {
     const siteUrl = getSiteUrl(option)
     const edges:iPodcastEdge[] = result.data.allMarkdownRemark.edges
-    const channelIndex = {}
+    const channelIndex:any = {}
 
     edges.forEach(
       edge => {
@@ -73,10 +73,11 @@ module.exports = ({ actions, reporter, graphql }, option: iPluginOption) => {
               date: pubDateStr,
               description,
               title,
-              channel
+              channel = ''
             }
           }
         } = edge
+
 
         if (typeof channelIndex[channel] === 'undefined') {
           channelIndex[channel] = []
