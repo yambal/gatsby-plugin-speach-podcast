@@ -2,7 +2,6 @@ import mp3 from './libs/mp3'
 import { listFiles } from './file-checker'
 import { cacheToPablic, podcastCashSet, checkCache, iPodcastCacheCheckResponse } from './libs/cache'
 import { getChannelTitle, getChannelDescription, getGoogleProjectId, getGoogleKeyFileName } from './libs/option-parser'
-import { mdToSsml } from 'md-to-ssl'
 import { iPodcastEdge, iPluginOption } from './libs/interfaces'
 import { mdToMp3 } from 'md-to-google-ssml'
 
