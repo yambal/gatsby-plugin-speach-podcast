@@ -107,13 +107,7 @@ const podcastEdgeToFile = (edge: iPodcastEdge, options: iPluginOption):Promise<i
     return checkCache(edge, options)
     .then(
       (checkCacheResponse) => {
-        
-
         return podcastBuildMp3(checkCacheResponse, edge, options, getGoogleProjectId(options), getGoogleKeyFileName(options))
-        /*
-        const ssml = mdToSsml(rawMarkdownBody, title, channelDescription, { google: true })
-        return podcastBuildMp3(checkCacheResponse, ssml, getGoogleProjectId(options), getGoogleKeyFileName(options))
-        */
       }
     )
     .then(

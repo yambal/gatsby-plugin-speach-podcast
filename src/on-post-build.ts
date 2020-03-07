@@ -9,6 +9,7 @@ var fs = require('fs')
  */
 interface iPodcastEdge {
     node: {
+      id: string
       fields: {
         slug: string
       }
@@ -34,6 +35,7 @@ module.exports = ({ actions, reporter, graphql }, option: iPluginOption) => {
     allMarkdownRemark(sort: {fields: frontmatter___date, order: DESC}, filter: {frontmatter: {templateKey: {eq: "PodCast"}}}, limit: 100) {
       edges {
         node {
+          id
           fields {
             slug
           }
@@ -61,6 +63,7 @@ module.exports = ({ actions, reporter, graphql }, option: iPluginOption) => {
       edge => {
         const {
           node :{
+            id,
             fields: {
               slug
             },
@@ -94,7 +97,7 @@ module.exports = ({ actions, reporter, graphql }, option: iPluginOption) => {
 
         /** Link 記事ページへのリンク */
         
-        const link = siteUrl ? `${siteUrl}${slug}` : slug
+        const link = siteUrl ? `${siteUrl}/podcasts/${channel}/${id}` : slug
 
         /** MP3 ファイルのTRL */
         const enclosureUrl = siteUrl ? absoluteUrl : url
@@ -133,7 +136,7 @@ module.exports = ({ actions, reporter, graphql }, option: iPluginOption) => {
     <googleplay:category text="Technology"/>
     <itunes:explicit>no</itunes:explicit>
     <language>ja-JP</language>
-    <link>${siteUrl}/</link>
+    <link>${siteUrl}/${key}</link>
     ${channelIndex[key].join('\n')}
   </channel>
 </rss>`
