@@ -67,10 +67,6 @@ const podcastEdgeToFile = (edge, options) => {
         return cache_1.checkCache(edge, options)
             .then((checkCacheResponse) => {
             return podcastBuildMp3(checkCacheResponse, edge, options, option_parser_1.getGoogleProjectId(options), option_parser_1.getGoogleKeyFileName(options));
-            /*
-            const ssml = mdToSsml(rawMarkdownBody, title, channelDescription, { google: true })
-            return podcastBuildMp3(checkCacheResponse, ssml, getGoogleProjectId(options), getGoogleKeyFileName(options))
-            */
         })
             .then((res) => {
             return podcastCacheSaver(res);

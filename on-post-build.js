@@ -10,6 +10,7 @@ module.exports = ({ actions, reporter, graphql }, option) => {
     allMarkdownRemark(sort: {fields: frontmatter___date, order: DESC}, filter: {frontmatter: {templateKey: {eq: "PodCast"}}}, limit: 100) {
       edges {
         node {
+          id
           fields {
             slug
           }
@@ -33,7 +34,7 @@ module.exports = ({ actions, reporter, graphql }, option) => {
         const edges = result.data.allMarkdownRemark.edges;
         const channelIndex = {};
         edges.forEach(edge => {
-            const { node: { fields: { slug }, mp3: { path, url, absoluteUrl }, frontmatter: { date: pubDateStr, description, title, channel = '' } } } = edge;
+            const { node: { id, fields: { slug }, mp3: { path, url, absoluteUrl }, frontmatter: { date: pubDateStr, description, title, channel = '' } } } = edge;
             if (typeof channelIndex[channel] === 'undefined') {
                 channelIndex[channel] = [];
             }
@@ -44,7 +45,7 @@ module.exports = ({ actions, reporter, graphql }, option) => {
             /** pubDate */
             const pubDateUTC = new Date(pubDateStr).toUTCString();
             /** Link 記事ページへのリンク */
-            const link = siteUrl ? `${siteUrl}${slug}` : slug;
+            const link = siteUrl ? `${siteUrl}/podcasts/${channel}/${id}` : slug;
             /** MP3 ファイルのTRL */
             const enclosureUrl = siteUrl ? absoluteUrl : url;
             const item = `<item>
@@ -76,7 +77,7 @@ module.exports = ({ actions, reporter, graphql }, option) => {
     <googleplay:category text="Technology"/>
     <itunes:explicit>no</itunes:explicit>
     <language>ja-JP</language>
-    <link>${siteUrl}/</link>
+    <link>${siteUrl}/${key}</link>
     ${channelIndex[key].join('\n')}
   </channel>
 </rss>`;

@@ -4,7 +4,7 @@ const graphql_1 = require("gatsby/graphql");
 const filePath_1 = require("./libs/filePath");
 const option_parser_1 = require("./libs/option-parser");
 // =====================================================
-let MP3Type = new graphql_1.GraphQLObjectType({
+let PodCastType = new graphql_1.GraphQLObjectType({
     name: 'Mp3',
     fields: {
         absoluteUrl: { type: graphql_1.GraphQLString },
@@ -19,7 +19,7 @@ module.exports = ({ type }, option) => {
     }
     return {
         mp3: {
-            type: MP3Type,
+            type: PodCastType,
             args: {
                 prefix: {
                     type: graphql_1.GraphQLString,
