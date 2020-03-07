@@ -3,6 +3,7 @@ export interface iPodcastBuild {
     cacheDir: string;
     publicDir: string;
     ssml: string;
+    options: any;
     fileName?: string;
     chacheValue?: string;
     cacheKey?: string;

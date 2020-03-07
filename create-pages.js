@@ -4,7 +4,7 @@ const file_checker_1 = require("./file-checker");
 const cache_1 = require("./libs/cache");
 const option_parser_1 = require("./libs/option-parser");
 const md_to_google_ssml_1 = require("md-to-google-ssml");
-const podcastBuildMp3 = (checkCacheResponse, markdown, projectId, keyFilename) => {
+const podcastBuildMp3 = (checkCacheResponse, edge, options, projectId, keyFilename) => {
     return new Promise((resolve) => {
         if (!checkCacheResponse.hasCashe || checkCacheResponse.isOld) {
             console.log('podcast: make mp3');
@@ -13,7 +13,18 @@ const podcastBuildMp3 = (checkCacheResponse, markdown, projectId, keyFilename) =
             if (!projectId || !keyFilename) {
                 throw new Error('error: projectId, keyFilename');
             }
-            md_to_google_ssml_1.mdToMp3(markdown, { projectId, keyFileName: keyFilename })
+            const { title, channel } = edge.node.frontmatter;
+            const { rawMarkdownBody } = edge.node;
+            const channelTitle = option_parser_1.getChannelTitle(channel, options);
+            const channelDescription = option_parser_1.getChannelDescription(channel, options);
+            md_to_google_ssml_1.mdToMp3(rawMarkdownBody, {
+                projectId,
+                keyFileName: keyFilename,
+                title: channelTitle,
+                description: channelDescription,
+                subTitle: title,
+                tempDir: '.podcast-temp'
+            })
                 .then(audioData => {
                 console.log('podcast: make mp3 success');
                 checkCacheResponse.audioData = audioData;
@@ -55,11 +66,7 @@ const podcastEdgeToFile = (edge, options) => {
     return new Promise((resolve, reject) => {
         return cache_1.checkCache(edge, options)
             .then((checkCacheResponse) => {
-            const { title, channel } = edge.node.frontmatter;
-            const { rawMarkdownBody } = edge.node;
-            const channelTitle = option_parser_1.getChannelTitle(channel, options);
-            const channelDescription = option_parser_1.getChannelDescription(channel, options);
-            return podcastBuildMp3(checkCacheResponse, rawMarkdownBody, option_parser_1.getGoogleProjectId(options), option_parser_1.getGoogleKeyFileName(options));
+            return podcastBuildMp3(checkCacheResponse, edge, options, option_parser_1.getGoogleProjectId(options), option_parser_1.getGoogleKeyFileName(options));
             /*
             const ssml = mdToSsml(rawMarkdownBody, title, channelDescription, { google: true })
             return podcastBuildMp3(checkCacheResponse, ssml, getGoogleProjectId(options), getGoogleKeyFileName(options))
