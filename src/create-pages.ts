@@ -10,6 +10,7 @@ export interface iPodcastBuild {
   cacheDir: string
   publicDir: string
   ssml: string
+  options: any
   fileName?: string
   chacheValue?: string
   cacheKey?: string,
@@ -19,7 +20,8 @@ export interface iPodcastBuild {
 
 const podcastBuildMp3 = (
   checkCacheResponse: iPodcastCacheCheckResponse,
-  markdown: string,
+  edge: any,
+  options: any,
   projectId?: string | null,
   keyFilename?: string | null
 ) => {
@@ -33,7 +35,20 @@ const podcastBuildMp3 = (
         throw new Error('error: projectId, keyFilename')
       }
 
-      mdToMp3(markdown, { projectId, keyFileName: keyFilename })
+      const { title, channel } = edge.node.frontmatter
+      const { rawMarkdownBody } = edge.node
+
+      const channelTitle = getChannelTitle(channel, options)
+      const channelDescription = getChannelDescription(channel, options)
+
+      mdToMp3(rawMarkdownBody, {
+        projectId,
+        keyFileName: keyFilename,
+        title: channelTitle,
+        description: channelDescription,
+        subTitle: title,
+        tempDir: '.podcast-temp'
+      })
       .then(
         audioData => {
           console.log('podcast: make mp3 success')
@@ -92,13 +107,9 @@ const podcastEdgeToFile = (edge: iPodcastEdge, options: iPluginOption):Promise<i
     return checkCache(edge, options)
     .then(
       (checkCacheResponse) => {
-        const { title, channel } = edge.node.frontmatter
-        const { rawMarkdownBody } = edge.node
+        
 
-        const channelTitle = getChannelTitle(channel, options)
-        const channelDescription = getChannelDescription(channel, options)
-
-        return podcastBuildMp3(checkCacheResponse, rawMarkdownBody, getGoogleProjectId(options), getGoogleKeyFileName(options))
+        return podcastBuildMp3(checkCacheResponse, edge, options, getGoogleProjectId(options), getGoogleKeyFileName(options))
         /*
         const ssml = mdToSsml(rawMarkdownBody, title, channelDescription, { google: true })
         return podcastBuildMp3(checkCacheResponse, ssml, getGoogleProjectId(options), getGoogleKeyFileName(options))
