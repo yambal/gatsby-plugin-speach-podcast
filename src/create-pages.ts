@@ -1,4 +1,3 @@
-import mp3 from './libs/mp3'
 import { listFiles } from './file-checker'
 import { cacheToPablic, podcastCashSet, checkCache, iPodcastCacheCheckResponse } from './libs/cache'
 import { getChannelTitle, getChannelDescription, getGoogleProjectId, getGoogleKeyFileName } from './libs/option-parser'
@@ -56,17 +55,6 @@ const podcastBuildMp3 = (
           resolve(checkCacheResponse)
         }
       )
-      /*
-      mp3(ssml, projectId, keyFilename)
-      .then(
-        audioData => {
-          console.log('podcast: make mp3 success')
-          checkCacheResponse.audioData = audioData
-          resolve(checkCacheResponse)
-        }
-      )
-      */
-
     } else {
       console.log('podcast: make mp3 skip')
       resolve(checkCacheResponse)
@@ -154,6 +142,7 @@ module.exports = ({ graphql }, pluginOptions: iPluginOption, cb: () => void) => 
         }
       }
     }
+    
   }
   `).then((result: any) => {
     if (result.errors) {

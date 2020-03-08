@@ -77,7 +77,7 @@ module.exports = ({ actions, reporter, graphql }, option) => {
     <googleplay:category text="Technology"/>
     <itunes:explicit>no</itunes:explicit>
     <language>ja-JP</language>
-    <link>${siteUrl}/${key}</link>
+    <link>${siteUrl}/podcasts/${key}</link>
     ${channelIndex[key].join('\n')}
   </channel>
 </rss>`;
