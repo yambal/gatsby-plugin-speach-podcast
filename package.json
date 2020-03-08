@@ -26,7 +26,7 @@
     "@google-cloud/text-to-speech": "^2.2.0",
     "crypto": "^1.0.1",
     "fs": "^0.0.1-security",
-    "md-to-google-ssml": "0.0.8",
+    "md-to-google-ssml": "0.0.9",
     "mkdirp-then": "^1.2.0",
     "util": "^0.12.1"
   }
