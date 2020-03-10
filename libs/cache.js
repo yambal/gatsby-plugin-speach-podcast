@@ -21,7 +21,7 @@ exports.getCacheList = () => {
             return file.indexOf('.txt') !== -1;
         });
         const keys = cacheFilePaths.map(cacheFilePath => {
-            const slug = cacheFilePath.replace(`${filePath_1.path.cacheDir}/cache-`, '').replace('.txt', '');
+            const slug = cacheFilePath.replace(`${filePath_1.path.cacheDir}/cache-podcast-`, '').replace('.txt', '');
             const mp3Path = filePath_1.path.edgeMp3CacheFilePath('', slug);
             return {
                 cache: cacheFilePath,

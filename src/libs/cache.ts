@@ -19,7 +19,7 @@ export const getCacheList = () => {
 
     const keys = cacheFilePaths.map(
       cacheFilePath => {
-        const slug = cacheFilePath.replace(`${path.cacheDir}/cache-`, '').replace('.txt', '')
+        const slug = cacheFilePath.replace(`${path.cacheDir}/cache-podcast-`, '').replace('.txt', '')
         const mp3Path = path.edgeMp3CacheFilePath('', slug)
         return {
           cache: cacheFilePath,
