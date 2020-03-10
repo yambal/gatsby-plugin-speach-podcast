@@ -171,8 +171,15 @@ module.exports = ({ graphql }, pluginOptions: iPluginOption, cb: () => void) => 
         getCacheList()
         .then(
           keys => {
-            console.log('krys', JSON.stringify(keys, null, 2))
-            console.log('slugs', JSON.stringify(slugs, null, 2))
+            //console.log('krys', JSON.stringify(keys, null, 2))
+            //console.log('slugs', JSON.stringify(slugs, null, 2))
+
+            const del = keys.filter(
+              key => {
+                return slugs.indexOf(key) === -1
+              }
+            )
+            console.log('del', del)
           }
         )
 
