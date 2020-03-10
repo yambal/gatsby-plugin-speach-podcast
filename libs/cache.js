@@ -17,8 +17,16 @@ exports.getCacheList = () => {
     return new Promise((resolve) => {
         const dir = `${process.cwd()}/.podcast`;
         const list = file_checker_1.listFiles(dir);
-        const keys = list.filter(file => {
+        const cacheFilePaths = list.filter(file => {
             return file.indexOf('.txt') !== -1;
+        });
+        const keys = cacheFilePaths.map(cacheFilePath => {
+            const slug = cacheFilePath.replace(`${filePath_1.path.cacheDir}/cache-`, '').replace('.txt', '');
+            const mp3Path = filePath_1.path.edgeMp3CacheFilePath('', slug);
+            return {
+                cache: cacheFilePath,
+                mp3: mp3Path
+            };
         });
         resolve(keys);
     });

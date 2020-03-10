@@ -113,14 +113,12 @@ module.exports = ({ graphql }, pluginOptions, cb) => {
             });
             cache_1.getCacheList()
                 .then(keys => {
-                //console.log('krys', JSON.stringify(keys, null, 2))
-                //console.log('slugs', JSON.stringify(slugs, null, 2))
                 const dels = keys.filter(key => {
-                    return slugs.indexOf(key) === -1;
+                    return slugs.indexOf(key.cache) === -1;
                 });
                 Promise.all(dels.map(del => {
                     console.log('delete', del);
-                    return file_checker_1.fileDelete(del);
+                    return [file_checker_1.fileDelete(del.cache), file_checker_1.fileDelete(del.mp3)];
                 })).then(() => {
                     console.log('/podcast');
                     cb && cb();

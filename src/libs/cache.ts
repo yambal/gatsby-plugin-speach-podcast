@@ -7,15 +7,28 @@ import { iPodcastEdge } from './interfaces'
 import { listFiles } from './file-checker'
 
 export const getCacheList = () => {
-  return new Promise((resolve: (files: string[]) => void) => {
+  return new Promise((resolve: (files: { cache:string, mp3:string }[]) => void) => {
     const dir = `${process.cwd()}/.podcast`
     const list = listFiles(dir);
 
-    const keys =list.filter(
+    const cacheFilePaths =list.filter(
       file => {
         return file.indexOf('.txt') !== -1
       }
     )
+
+    const keys = cacheFilePaths.map(
+      cacheFilePath => {
+        const slug = cacheFilePath.replace(`${path.cacheDir}/cache-`, '').replace('.txt', '')
+        const mp3Path = path.edgeMp3CacheFilePath('', slug)
+        return {
+          cache: cacheFilePath,
+          mp3: mp3Path
+        }
+      }
+    )
+
+
     resolve(keys)
   })
 }
