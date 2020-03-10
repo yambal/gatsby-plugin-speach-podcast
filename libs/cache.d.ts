@@ -1,6 +1,6 @@
 /// <reference types="node" />
 import { iPodcastEdge } from './interfaces';
-export declare const getCacheKeyList: () => Promise<string[]>;
+export declare const getCacheList: () => Promise<string[]>;
 /** キャッシュを取得 */
 export declare const podcastCacheGet: (key: string) => Promise<string | null>;
 /** キャッシュを保存 */

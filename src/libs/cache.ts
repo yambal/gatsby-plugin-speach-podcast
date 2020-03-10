@@ -6,7 +6,7 @@ import * as util from 'util'
 import { iPodcastEdge } from './interfaces'
 import { listFiles } from './file-checker'
 
-export const getCacheKeyList = () => {
+export const getCacheList = () => {
   return new Promise((resolve: (files: string[]) => void) => {
     const dir = `${process.cwd()}/.podcast`
     const list = listFiles(dir);
@@ -14,10 +14,6 @@ export const getCacheKeyList = () => {
     const keys =list.filter(
       file => {
         return file.indexOf('.txt') !== -1
-      }
-    ).map(
-      file => {
-        return file.replace(`${dir}/`, '').replace('.txt', '')
       }
     )
     resolve(keys)

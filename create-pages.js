@@ -108,9 +108,9 @@ module.exports = ({ graphql }, pluginOptions, cb) => {
             .then(() => {
             const slugs = edges.map(edge => {
                 const { channel, slug } = edge.node.frontmatter;
-                return filePath_1.path.edgeFileName(channel, slug);
+                return filePath_1.path.edgeMp3CacheFilePath(channel, slug);
             });
-            cache_1.getCacheKeyList()
+            cache_1.getCacheList()
                 .then(keys => {
                 console.log('krys', JSON.stringify(keys, null, 2));
                 console.log('slugs', JSON.stringify(slugs, null, 2));

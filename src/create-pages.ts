@@ -1,5 +1,5 @@
 import { listFiles } from './libs/file-checker'
-import { cacheToPablic, podcastCashSet, checkCache, iPodcastCacheCheckResponse, getCacheKeyList } from './libs/cache'
+import { cacheToPablic, podcastCashSet, checkCache, iPodcastCacheCheckResponse, getCacheList } from './libs/cache'
 import { getChannelTitle, getChannelDescription, getGoogleProjectId, getGoogleKeyFileName } from './libs/option-parser'
 import { iPodcastEdge, iPluginOption } from './libs/interfaces'
 import { mdToMp3 } from 'md-to-google-ssml'
@@ -165,10 +165,10 @@ module.exports = ({ graphql }, pluginOptions: iPluginOption, cb: () => void) => 
         const slugs = edges.map(
           edge => {
             const { channel, slug } = edge.node.frontmatter
-            return path.edgeFileName(channel, slug)
+            return path.edgeMp3CacheFilePath(channel, slug)
           }
         )
-        getCacheKeyList()
+        getCacheList()
         .then(
           keys => {
             console.log('krys', JSON.stringify(keys, null, 2))

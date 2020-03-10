@@ -13,14 +13,12 @@ const mkdirp_then_1 = require("./mkdirp-then");
 const crypto = __importStar(require("crypto"));
 const util = __importStar(require("util"));
 const file_checker_1 = require("./file-checker");
-exports.getCacheKeyList = () => {
+exports.getCacheList = () => {
     return new Promise((resolve) => {
         const dir = `${process.cwd()}/.podcast`;
         const list = file_checker_1.listFiles(dir);
         const keys = list.filter(file => {
             return file.indexOf('.txt') !== -1;
-        }).map(file => {
-            return file.replace(`${dir}/`, '').replace('.txt', '');
         });
         resolve(keys);
     });
