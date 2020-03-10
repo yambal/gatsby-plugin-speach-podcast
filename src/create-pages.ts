@@ -3,6 +3,7 @@ import { cacheToPablic, podcastCashSet, checkCache, iPodcastCacheCheckResponse, 
 import { getChannelTitle, getChannelDescription, getGoogleProjectId, getGoogleKeyFileName } from './libs/option-parser'
 import { iPodcastEdge, iPluginOption } from './libs/interfaces'
 import { mdToMp3 } from 'md-to-google-ssml'
+import { path } from './libs/filePath'
 
 export interface iPodcastBuild {
   edge: any
@@ -163,7 +164,8 @@ module.exports = ({ graphql }, pluginOptions: iPluginOption, cb: () => void) => 
       () => {
         const slugs = edges.map(
           edge => {
-            return edge.node.frontmatter.slug
+            const { channel, slug } = edge.node.frontmatter
+            return path.edgeFileName(channel, slug)
           }
         )
         getCacheKeyList()

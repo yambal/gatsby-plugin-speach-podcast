@@ -3,6 +3,7 @@ Object.defineProperty(exports, "__esModule", { value: true });
 const cache_1 = require("./libs/cache");
 const option_parser_1 = require("./libs/option-parser");
 const md_to_google_ssml_1 = require("md-to-google-ssml");
+const filePath_1 = require("./libs/filePath");
 const podcastBuildMp3 = (checkCacheResponse, edge, options, projectId, keyFilename) => {
     return new Promise((resolve) => {
         if (!checkCacheResponse.hasCashe || checkCacheResponse.isOld) {
@@ -106,7 +107,8 @@ module.exports = ({ graphql }, pluginOptions, cb) => {
         }))
             .then(() => {
             const slugs = edges.map(edge => {
-                return edge.node.frontmatter.slug;
+                const { channel, slug } = edge.node.frontmatter;
+                return filePath_1.path.edgeFileName(channel, slug);
             });
             cache_1.getCacheKeyList()
                 .then(keys => {
