@@ -12,6 +12,17 @@ const filePath_1 = require("./filePath");
 const mkdirp_then_1 = require("./mkdirp-then");
 const crypto = __importStar(require("crypto"));
 const util = __importStar(require("util"));
+const file_checker_1 = require("./file-checker");
+exports.getCacheKeyList = () => {
+    return new Promise((resolve) => {
+        const dir = `${process.cwd()}/.podcast`;
+        const list = file_checker_1.listFiles(dir);
+        const keys = list.map(file => {
+            return file.replace(dir, '').replace('.txt', '');
+        });
+        resolve(keys);
+    });
+};
 /** キャッシュを取得 */
 exports.podcastCacheGet = (key) => {
     return new Promise((resolve) => {
@@ -66,7 +77,7 @@ exports.buildMpCacheValue = (title, body, channel, date, slug) => {
 exports.checkCache = (edge, pluginOption) => {
     return new Promise((resolve) => {
         const html = edge.node.html;
-        const { title, date, channel, slug } = edge.node.frontmatter;
+        const { title, date, channel, slug, description } = edge.node.frontmatter;
         const cacheKey = filePath_1.path.edgeKey(channel, slug);
         exports.podcastCacheGet(cacheKey)
             .then(cachedValue => {

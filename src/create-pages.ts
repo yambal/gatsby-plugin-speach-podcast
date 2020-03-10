@@ -1,5 +1,5 @@
-import { listFiles } from './file-checker'
-import { cacheToPablic, podcastCashSet, checkCache, iPodcastCacheCheckResponse } from './libs/cache'
+import { listFiles } from './libs/file-checker'
+import { cacheToPablic, podcastCashSet, checkCache, iPodcastCacheCheckResponse, getCacheKeyList } from './libs/cache'
 import { getChannelTitle, getChannelDescription, getGoogleProjectId, getGoogleKeyFileName } from './libs/option-parser'
 import { iPodcastEdge, iPluginOption } from './libs/interfaces'
 import { mdToMp3 } from 'md-to-google-ssml'
@@ -24,6 +24,7 @@ const podcastBuildMp3 = (
   projectId?: string | null,
   keyFilename?: string | null
 ) => {
+
   return new Promise((resolve: (resolve: iPodcastCacheCheckResponse) => void) => {
     if (!checkCacheResponse.hasCashe || checkCacheResponse.isOld) {
       console.log('podcast: make mp3')
@@ -34,7 +35,7 @@ const podcastBuildMp3 = (
         throw new Error('error: projectId, keyFilename')
       }
 
-      const { title, channel } = edge.node.frontmatter
+      const { title, channel, description } = edge.node.frontmatter
       const { rawMarkdownBody } = edge.node
 
       const channelTitle = getChannelTitle(channel, options)
@@ -46,6 +47,7 @@ const podcastBuildMp3 = (
         title: channelTitle,
         description: channelDescription,
         subTitle: title,
+        subDescription: description,
         tempDir: '.podcast-temp'
       })
       .then(
@@ -56,7 +58,7 @@ const podcastBuildMp3 = (
         }
       )
     } else {
-      console.log('podcast: make mp3 skip')
+      // console.log('podcast: make mp3 skip')
       resolve(checkCacheResponse)
     }
   })
@@ -134,6 +136,7 @@ module.exports = ({ graphql }, pluginOptions: iPluginOption, cb: () => void) => 
           frontmatter {
             slug
             title
+            description
             date
             channel
           }
@@ -142,7 +145,6 @@ module.exports = ({ graphql }, pluginOptions: iPluginOption, cb: () => void) => 
         }
       }
     }
-    
   }
   `).then((result: any) => {
     if (result.errors) {
@@ -150,8 +152,12 @@ module.exports = ({ graphql }, pluginOptions: iPluginOption, cb: () => void) => 
       return Promise.reject(result.errors)
     }
 
-    const list = listFiles(`${process.cwd()}/.podcast`);
-    console.log('file check', list.length);
+    getCacheKeyList()
+      .then(
+        keys => {
+          console.log(JSON.stringify(keys, null, 2))
+        }
+      )
 
     const edges: iPodcastEdge[] = result.data.allMarkdownRemark.edges
 

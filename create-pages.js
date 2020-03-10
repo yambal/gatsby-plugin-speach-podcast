@@ -1,6 +1,5 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-const file_checker_1 = require("./file-checker");
 const cache_1 = require("./libs/cache");
 const option_parser_1 = require("./libs/option-parser");
 const md_to_google_ssml_1 = require("md-to-google-ssml");
@@ -13,7 +12,7 @@ const podcastBuildMp3 = (checkCacheResponse, edge, options, projectId, keyFilena
             if (!projectId || !keyFilename) {
                 throw new Error('error: projectId, keyFilename');
             }
-            const { title, channel } = edge.node.frontmatter;
+            const { title, channel, description } = edge.node.frontmatter;
             const { rawMarkdownBody } = edge.node;
             const channelTitle = option_parser_1.getChannelTitle(channel, options);
             const channelDescription = option_parser_1.getChannelDescription(channel, options);
@@ -23,6 +22,7 @@ const podcastBuildMp3 = (checkCacheResponse, edge, options, projectId, keyFilena
                 title: channelTitle,
                 description: channelDescription,
                 subTitle: title,
+                subDescription: description,
                 tempDir: '.podcast-temp'
             })
                 .then(audioData => {
@@ -32,7 +32,7 @@ const podcastBuildMp3 = (checkCacheResponse, edge, options, projectId, keyFilena
             });
         }
         else {
-            console.log('podcast: make mp3 skip');
+            // console.log('podcast: make mp3 skip')
             resolve(checkCacheResponse);
         }
     });
@@ -85,6 +85,7 @@ module.exports = ({ graphql }, pluginOptions, cb) => {
           frontmatter {
             slug
             title
+            description
             date
             channel
           }
@@ -93,15 +94,16 @@ module.exports = ({ graphql }, pluginOptions, cb) => {
         }
       }
     }
-    
   }
   `).then((result) => {
         if (result.errors) {
             result.errors.forEach((e) => console.error(e.toString()));
             return Promise.reject(result.errors);
         }
-        const list = file_checker_1.listFiles(`${process.cwd()}/.podcast`);
-        console.log('file check', list.length);
+        cache_1.getCacheKeyList()
+            .then(keys => {
+            console.log(JSON.stringify(keys, null, 2));
+        });
         const edges = result.data.allMarkdownRemark.edges;
         Promise.all(edges.map(edge => {
             return podcastEdgeToFile(edge, pluginOptions);

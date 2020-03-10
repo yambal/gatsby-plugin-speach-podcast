@@ -4,6 +4,20 @@ import { mkdirpThen } from './mkdirp-then'
 import * as crypto from 'crypto'
 import * as util from 'util'
 import { iPodcastEdge } from './interfaces'
+import { listFiles } from './file-checker'
+
+export const getCacheKeyList = () => {
+  return new Promise((resolve: (files: string[]) => void) => {
+    const dir = `${process.cwd()}/.podcast`
+    const list = listFiles(dir);
+    const keys =list.map(
+      file => {
+        return file.replace(dir, '').replace('.txt', '')
+      }
+    )
+    resolve(keys)
+  })
+}
 
 /** キャッシュを取得 */
 export const podcastCacheGet = (key: string) => {
@@ -78,7 +92,7 @@ export interface iPodcastCacheCheckResponse {
 export const checkCache = (edge: iPodcastEdge, pluginOption: any) => {
   return new Promise((resolve: (resolve: iPodcastCacheCheckResponse) => void) => {
     const html = edge.node.html
-    const { title, date, channel, slug } = edge.node.frontmatter
+    const { title, date, channel, slug, description } = edge.node.frontmatter
     const cacheKey = path.edgeKey(channel, slug)
     podcastCacheGet(cacheKey)
     .then(

@@ -3,6 +3,7 @@ export interface iPodcastEdge {
         html: string;
         frontmatter: {
             title: string;
+            description: string;
             date: string;
             channel: string;
             slug: string;

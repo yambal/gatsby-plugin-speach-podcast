@@ -26,7 +26,7 @@ const getFileType = (path: string) => {
   }
 }
   
-export const listFiles = (dirPath: string) => {
+export const listFiles = (dirPath: string):string[] => {
   const ret: any[] = [];
   try {
     const paths = fs.readdirSync(dirPath);
