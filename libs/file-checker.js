@@ -52,3 +52,14 @@ exports.listFiles = (dirPath) => {
         return [];
     }
 };
+exports.fileDelete = (file) => {
+    return new Promise((resolve) => {
+        try {
+            fs.unlinkSync(file);
+            resolve();
+        }
+        catch (error) {
+            resolve();
+        }
+    });
+};

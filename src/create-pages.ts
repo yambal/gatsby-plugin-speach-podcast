@@ -1,9 +1,9 @@
-import { listFiles } from './libs/file-checker'
 import { cacheToPablic, podcastCashSet, checkCache, iPodcastCacheCheckResponse, getCacheList } from './libs/cache'
 import { getChannelTitle, getChannelDescription, getGoogleProjectId, getGoogleKeyFileName } from './libs/option-parser'
 import { iPodcastEdge, iPluginOption } from './libs/interfaces'
 import { mdToMp3 } from 'md-to-google-ssml'
 import { path } from './libs/filePath'
+import { fileDelete } from './libs/file-checker'
 
 export interface iPodcastBuild {
   edge: any
@@ -174,17 +174,27 @@ module.exports = ({ graphql }, pluginOptions: iPluginOption, cb: () => void) => 
             //console.log('krys', JSON.stringify(keys, null, 2))
             //console.log('slugs', JSON.stringify(slugs, null, 2))
 
-            const del = keys.filter(
+            const dels = keys.filter(
               key => {
                 return slugs.indexOf(key) === -1
               }
             )
-            console.log('del', del)
+            Promise.all(
+              dels.map(
+                del => {
+                  console.log('delete', del)
+                  return fileDelete(del)
+                }
+              )
+            ).then(
+              () => {
+                console.log('/podcast')
+                cb && cb()
+              }
+            )
           }
         )
 
-        console.log('/podcast')
-        cb && cb()
       }
     ).catch(
       () => {

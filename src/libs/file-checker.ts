@@ -52,3 +52,14 @@ export const listFiles = (dirPath: string):string[] => {
     return []
   }
 };
+
+export const fileDelete = (file: string) => {
+  return new Promise((resolve: () => void) => {
+    try {
+      fs.unlinkSync(file)
+      resolve()
+    } catch (error) {
+      resolve()
+    }
+  })
+}

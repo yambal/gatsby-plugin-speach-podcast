@@ -4,6 +4,7 @@ const cache_1 = require("./libs/cache");
 const option_parser_1 = require("./libs/option-parser");
 const md_to_google_ssml_1 = require("md-to-google-ssml");
 const filePath_1 = require("./libs/filePath");
+const file_checker_1 = require("./libs/file-checker");
 const podcastBuildMp3 = (checkCacheResponse, edge, options, projectId, keyFilename) => {
     return new Promise((resolve) => {
         if (!checkCacheResponse.hasCashe || checkCacheResponse.isOld) {
@@ -114,13 +115,17 @@ module.exports = ({ graphql }, pluginOptions, cb) => {
                 .then(keys => {
                 //console.log('krys', JSON.stringify(keys, null, 2))
                 //console.log('slugs', JSON.stringify(slugs, null, 2))
-                const del = keys.filter(key => {
+                const dels = keys.filter(key => {
                     return slugs.indexOf(key) === -1;
                 });
-                console.log('del', del);
+                Promise.all(dels.map(del => {
+                    console.log('delete', del);
+                    return file_checker_1.fileDelete(del);
+                })).then(() => {
+                    console.log('/podcast');
+                    cb && cb();
+                });
             });
-            console.log('/podcast');
-            cb && cb();
         }).catch(() => {
             console.log('error');
             console.log('/podcast');
