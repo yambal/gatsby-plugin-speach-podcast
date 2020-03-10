@@ -165,8 +165,7 @@ module.exports = ({ graphql }, pluginOptions: iPluginOption, cb: () => void) => 
         const slugs = edges.map(
           edge => {
             const { channel, slug } = edge.node.frontmatter
-            return path.edgeMp3CacheFilePath(channel, slug)
-          }
+            return path.cacheFilePath(path.edgeKey(channel, slug))
         )
         getCacheList()
         .then(
