@@ -17,8 +17,10 @@ exports.getCacheKeyList = () => {
     return new Promise((resolve) => {
         const dir = `${process.cwd()}/.podcast`;
         const list = file_checker_1.listFiles(dir);
-        const keys = list.map(file => {
-            return file.replace(dir, '').replace('.txt', '');
+        const keys = list.filter(file => {
+            return file.indexOf('.txt') !== -1;
+        }).map(file => {
+            return file.replace(`${dir}/`, '').replace('.txt', '');
         });
         resolve(keys);
     });

@@ -152,13 +152,6 @@ module.exports = ({ graphql }, pluginOptions: iPluginOption, cb: () => void) => 
       return Promise.reject(result.errors)
     }
 
-    getCacheKeyList()
-      .then(
-        keys => {
-          console.log(JSON.stringify(keys, null, 2))
-        }
-      )
-
     const edges: iPodcastEdge[] = result.data.allMarkdownRemark.edges
 
     Promise.all(edges.map(
@@ -168,6 +161,19 @@ module.exports = ({ graphql }, pluginOptions: iPluginOption, cb: () => void) => 
     ))
     .then(
       () => {
+        const slugs = edges.map(
+          edge => {
+            return edge.node.frontmatter.slug
+          }
+        )
+        getCacheKeyList()
+        .then(
+          keys => {
+            console.log('krys', JSON.stringify(keys, null, 2))
+            console.log('slugs', JSON.stringify(slugs, null, 2))
+          }
+        )
+
         console.log('/podcast')
         cb && cb()
       }

@@ -100,15 +100,19 @@ module.exports = ({ graphql }, pluginOptions, cb) => {
             result.errors.forEach((e) => console.error(e.toString()));
             return Promise.reject(result.errors);
         }
-        cache_1.getCacheKeyList()
-            .then(keys => {
-            console.log(JSON.stringify(keys, null, 2));
-        });
         const edges = result.data.allMarkdownRemark.edges;
         Promise.all(edges.map(edge => {
             return podcastEdgeToFile(edge, pluginOptions);
         }))
             .then(() => {
+            const slugs = edges.map(edge => {
+                return edge.node.frontmatter.slug;
+            });
+            cache_1.getCacheKeyList()
+                .then(keys => {
+                console.log('krys', JSON.stringify(keys, null, 2));
+                console.log('slugs', JSON.stringify(slugs, null, 2));
+            });
             console.log('/podcast');
             cb && cb();
         }).catch(() => {
