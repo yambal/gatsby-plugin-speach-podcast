@@ -1,16 +1,43 @@
-import { GraphQLObjectType, GraphQLString } from 'gatsby/graphql'
+import { GraphQLObjectType, GraphQLString, GraphQLList, GraphQLInt } from 'gatsby/graphql'
 import { path } from './libs/filePath'
 import { getAudioPath, getSiteUrl } from './libs/option-parser'
 import { iPluginOption } from './libs/interfaces';
 import { getAbout } from 'md-to-google-ssml';
 
 // =====================================================
+let HeaderType = new GraphQLObjectType({
+  name: `header`,
+  fields: {
+    text: {
+      type: GraphQLString
+    },
+    level: {
+      type: GraphQLInt
+    }
+  }
+})
+
+let LinkType = new GraphQLObjectType({
+  name: `link`,
+  fields: {
+    text: {
+      type: GraphQLString
+    },
+    href: {
+      type: GraphQLString
+    }
+  }
+})
+
+
 let PodCastType = new GraphQLObjectType({
   name: 'Mp3',
   fields: {
     absoluteUrl: { type: GraphQLString },
     url: { type: GraphQLString },
-    path: { type: GraphQLString }
+    path: { type: GraphQLString },
+    headers: {type: new GraphQLList(HeaderType)},
+    links: {type: new GraphQLList(LinkType)}
   },
 });
   
@@ -42,13 +69,14 @@ module.exports = ({ type }, option: iPluginOption) => {
         const absoluteUrl = path.edgeMp3AbsoluteUrl(channel, slug, option)
 
         const about = getAbout(rawMarkdownBody)
-        console.log(JSON.stringify(about, null, 2))
 
         if (templateKey === 'PodCast'){
           return {
             absoluteUrl: absoluteUrl,
             url: `/${audioPath}/${fileName}`,
-            path: mp3PublicFilePath
+            path: mp3PublicFilePath,
+            headers: about.headers,
+            links: about.links
           }
         }
 
