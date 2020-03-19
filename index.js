@@ -1,6 +1,6 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-const md_to_google_ssml_1 = require("md-to-google-ssml");
+const utility_1 = require("md-to-google-ssml/utility");
 exports.ssmlMaxLength = (ssml) => {
-    return md_to_google_ssml_1.getSsmLMaxLength(ssml, { projectId: '', keyFileName: '' });
+    return utility_1.getSsmLMaxLength(ssml, { projectId: '', keyFileName: '' });
 };

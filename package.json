@@ -1,6 +1,6 @@
 {
   "name": "gatsby-plugin-speach-podcast",
-  "version": "0.5.9",
+  "version": "0.6.0",
   "description": "gatsby-plugin-speach-podcast",
   "main": "index.js",
   "scripts": {
@@ -26,7 +26,7 @@
     "@google-cloud/text-to-speech": "^2.2.0",
     "crypto": "^1.0.1",
     "fs": "^0.0.1-security",
-    "md-to-google-ssml": "0.1.4",
+    "md-to-google-ssml": "0.1.5",
     "mkdirp-then": "^1.2.0",
     "util": "^0.12.1"
   }
