@@ -565,10 +565,10 @@ marked@^0.8.0:
   resolved "https://registry.yarnpkg.com/marked/-/marked-0.8.0.tgz#ec5c0c9b93878dc52dd54be8d0e524097bd81a99"
   integrity sha512-MyUe+T/Pw4TZufHkzAfDj6HarCBWia2y27/bhuYkTaiUnfDYFnCP3KUN+9oM7Wi6JA2rymtVYbQu3spE0GCmxQ==
 
-md-to-google-ssml@0.1.5:
-  version "0.1.5"
-  resolved "https://registry.yarnpkg.com/md-to-google-ssml/-/md-to-google-ssml-0.1.5.tgz#5669b06b52fb0992947ebd82f65603cc6207b940"
-  integrity sha512-QqmMK7nj0xpALguubtEu7ePrvJ633uTpmKh5x7p2XC5Ix5YwAyBYCBSeCW0XabV0Y7HtqABNlHFxhg0lAalqtQ==
+md-to-google-ssml@0.1.6:
+  version "0.1.6"
+  resolved "https://registry.yarnpkg.com/md-to-google-ssml/-/md-to-google-ssml-0.1.6.tgz#54dc470fcbadc57fafcf4c9a61a817aad98d825f"
+  integrity sha512-Tba8jBPos8nVnLWDm51KaXWwPfnaaPYC9+f3UG+S6i1KU5s8Hf9NNJZ/oFfkERoWd41bbXGpviJYw8y0knFdhw==
   dependencies:
     "@ffmpeg-installer/ffmpeg" "^1.0.20"
     "@google-cloud/text-to-speech" "^2.2.0"
